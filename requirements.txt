@@ -1,0 +1,10 @@
+# Core: no heavy dependencies
+# turkish-nlp-toolkit works with stdlib only for preprocessing
+
+# Optional BERT support:
+# torch>=1.9.0
+# transformers>=4.20.0
+# scikit-learn>=1.0.0
+
+# Dev
+# pytest>=7.0.0
