@@ -3,8 +3,6 @@ from setuptools import setup, find_packages
 setup(
     name="turkish-nlp-toolkit",
     version="0.1.0",
-    author="Enis Dogan",
-    author_email="enis-dogan@outlook.com",
     description="A comprehensive NLP toolkit for the Turkish language",
     long_description=open("README.md", encoding="utf-8").read() if __import__("os").path.exists("README.md") else "",
     long_description_content_type="text/markdown",
