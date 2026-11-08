@@ -1,9 +1,15 @@
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
-from . import abbreviations, cleaner, normalizer, stopwords, tokenizer
+from . import abbreviations, address, cleaner, normalizer, stemmer, stopwords, tokenizer
 from .pipeline import Pipeline
 
 __all__ = [
-    "abbreviations", "cleaner", "normalizer",
-    "stopwords", "tokenizer", "Pipeline",
+    "abbreviations",
+    "address",
+    "cleaner",
+    "normalizer",
+    "stemmer",
+    "stopwords",
+    "tokenizer",
+    "Pipeline",
 ]
