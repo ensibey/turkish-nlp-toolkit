@@ -1,11 +1,4 @@
-"""
-stemmer.py — Lightweight Rule-Based Agglutinative Turkish Stemmer.
-
-Handles high-frequency nominal, plural, case, possessive, and derivational
-suffixes while respecting Turkish vowel harmony and consonant softening
-(p->b, ç->c, t->d, k->ğ).
-"""
-
+"""Rule-based agglutinative Turkish stemmer with terminal consonant softening recovery."""
 from __future__ import annotations
 
 from typing import List, Union
@@ -14,7 +7,7 @@ from typing import List, Union
 _INFLECTIONAL_SUFFIXES = [
     "larından", "lerinden", "larımız", "lerimiz", "larınız", "leriniz",
     "larında", "lerinde", "larına", "lerine", "larını", "lerini",
-    "lardan", "lerden", "운",
+    "lardan", "lerden",
     "dan", "den", "tan", "ten",
     "nda", "nde", "da", "de", "ta", "te",
     "nın", "nin", "nun", "nün", "ın", "in", "un", "ün",
@@ -42,17 +35,13 @@ _PROTECTED_ROOTS = {
 
 
 def stem_word(word: str, min_root_len: int = 3) -> str:
-    """
-    Strip Turkish inflectional/derivational suffixes from a single token
-    and restore terminal consonant devoicing (e.g., 'kitabın' -> 'kitap').
-    """
+    """Strip inflectional suffixes from a single token and restore devoiced final consonants."""
     w = word.strip()
     if len(w) <= min_root_len or w in _PROTECTED_ROOTS:
         return w
 
-    # Strip apostrophe suffixes directly (e.g., "İstanbul'da" -> "İstanbul")
-    if "'" in w or "’" in w:
-        parts = w.replace("’", "'").split("'")
+    if "'" in w or "\u2019" in w:
+        parts = w.replace("\u2019", "'").split("'")
         if len(parts[0]) >= 2:
             return parts[0]
 
@@ -72,7 +61,6 @@ def stem_word(word: str, min_root_len: int = 3) -> str:
                     changed = False
                 break
 
-    # Restore softened final consonant for common roots (e.g., kitab -> kitap, ağac -> ağaç)
     if len(current) >= min_root_len and current[-1] in _SOFTENED_CONSONANTS:
         candidate = current[:-1] + _SOFTENED_CONSONANTS[current[-1]]
         if candidate in _PROTECTED_ROOTS or current.endswith(("kitab", "ağac", "renğ", "sokag", "yemeğ")):
