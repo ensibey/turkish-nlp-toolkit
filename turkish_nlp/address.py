@@ -105,7 +105,7 @@ def parse_address_components(text: str) -> Dict[str, Optional[str]]:
         tokens = mah_match.group(1).strip().split()
         components["mahalle"] = " ".join(tokens[-2:]) if len(tokens) > 2 else mah_match.group(1).strip()
 
-    cad_match = re.search(r"([a-zçğıöşü0-9]+(?:\s+[a-zçğıöşü0-9]+)?)\s+(?:caddesi|bulvarı)\b", norm)
+    cad_match = re.search(r"([a-zçğıöşü0-9]+)\s+(?:caddesi|bulvarı)\b", norm)
     if cad_match:
         components["cadde_bulvar"] = cad_match.group(1).strip()
 
