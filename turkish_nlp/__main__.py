@@ -6,7 +6,7 @@ import json
 import sys
 from typing import List, Optional
 
-from . import address, normalizer, stemmer, tokenizer
+from . import address, deasciifier, entities, normalizer, sentence, stemmer, tokenizer
 from .pipeline import Pipeline
 
 
@@ -29,6 +29,15 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     p_pipe = sub.add_parser("pipeline", help="Run full preprocessing pipeline on text")
     p_pipe.add_argument("text", help="Input text string")
+
+    p_sent = sub.add_parser("sentences", help="Split Turkish text into sentences (abbreviation-aware)")
+    p_sent.add_argument("text", help="Input text string")
+
+    p_ent = sub.add_parser("entities", help="Extract Turkish emails, phones, IBANs, postal codes, and TCKN")
+    p_ent.add_argument("text", help="Input text string")
+
+    p_deasc = sub.add_parser("deasciify", help="Restore Turkish diacritics on ASCII-typed text")
+    p_deasc.add_argument("text", help="Input ASCII-typed Turkish text")
 
     args = parser.parse_args(argv)
 
@@ -53,6 +62,12 @@ def main(argv: Optional[List[str]] = None) -> int:
             .stem()
         )
         print(" ".join(pipe.run(args.text)))
+    elif args.command == "sentences":
+        print(json.dumps(sentence.split_sentences(args.text), ensure_ascii=False, indent=2))
+    elif args.command == "entities":
+        print(json.dumps(entities.extract_entities(args.text).to_dict(), ensure_ascii=False, indent=2))
+    elif args.command == "deasciify":
+        print(deasciifier.restore_diacritics(args.text))
 
     return 0
 
