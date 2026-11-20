@@ -10,7 +10,7 @@ readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.8"
 authors = [
-    {name = "Enis Dogan", email = "enisdogan3535@gmail.com"}
+    {name = "Enis Dogan", email = "enis-dogan@outlook.com"}
 ]
 keywords = ["turkish", "nlp", "text-processing", "stemmer", "address-parser", "bert"]
 classifiers = [
