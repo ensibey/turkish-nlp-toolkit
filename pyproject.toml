@@ -36,3 +36,11 @@ dev = [
 
 [project.scripts]
 turkish-nlp = "turkish_nlp.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/ensibey/turkish-nlp-toolkit"
+Repository = "https://github.com/ensibey/turkish-nlp-toolkit"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
